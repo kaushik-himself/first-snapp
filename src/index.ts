@@ -1,10 +1,4 @@
-import {
-  Field,
-  SmartContract,
-  state,
-  State,
-  method,
-} from 'snarkyjs';
+import { Field, SmartContract, state, State, method } from 'snarkyjs';
 
 /**
  * Creates 3 state fields and exposes a smart contract method to update them.
