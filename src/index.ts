@@ -1,26 +1,27 @@
-import { Field, SmartContract, state, State, method, UInt64 } from 'snarkyjs';
+import {
+  Field,
+  SmartContract,
+  state,
+  State,
+  method,
+} from 'snarkyjs';
 
 /**
- * Basic Example
- * See https://docs.minaprotocol.com/zkapps for more info.
- *
- * The Add contract initializes the state variable 'num' to be a Field(1) value by default when deployed.
- * When the 'update' method is called, the Add contract adds Field(2) to its 'num' contract state.
+ * Creates 3 state fields and exposes a smart contract method to update them.
  */
-export default class Add extends SmartContract {
-  @state(Field) num = State<Field>();
+export class StateUpdates extends SmartContract {
+  @state(Field) f1 = State<Field>();
+  @state(Field) f2 = State<Field>();
+  @state(Field) f3 = State<Field>();
 
   // initialization
-  deploy(initialBalance: UInt64, num: Field = Field(1)) {
+  deploy() {
     super.deploy();
-    this.balance.addInPlace(initialBalance);
-    this.num.set(num);
   }
 
-  @method async update() {
-    const currentState = await this.num.get();
-    const newState = currentState.add(2);
-    newState.assertEquals(currentState.add(2));
-    this.num.set(newState);
+  @method async update(f1: Field, f2: Field, f3: Field) {
+    this.f1.set(f1);
+    this.f2.set(f2);
+    this.f3.set(f3);
   }
 }
